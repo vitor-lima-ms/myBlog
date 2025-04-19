@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView
 
 from publication.models import Publication, Comment
 from publication.myForms import CreatePublicationForm, SearchPublicationForm ,CommentForm
@@ -38,7 +37,7 @@ def createPublication(request):
             return redirect('publication:home')
     else:
         form = CreatePublicationForm()
-    return render(request, 'createPublication.html', {'form': form})
+        return render(request, 'createPublication.html', {'form': form})
 
 def detailsPublication(request, id):
     publication = get_object_or_404(Publication, id=id)
