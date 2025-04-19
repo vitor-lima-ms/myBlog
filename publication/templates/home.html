@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myBlog | {% block title %}Home{% endblock title %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    {% block css %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'home.css' %}">
+    {% endblock css %}
+</head>
+<body>
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">myBlog</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "publication:createPublication" %}">Create publication</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "publication:home" %}">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Publications
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url "publication:newsPublication" %}">News</a></li>
+                  <li><a class="dropdown-item" href="{% url "publication:sportsPublication" %}">Sports</a></li>
+                  <li><a class="dropdown-item" href="{% url "publication:entertainmentPublication" %}">Entertainment</a></li>
+                  <li><a class="dropdown-item" href="{% url "publication:technologyPublication" %}">Technology</a></li>
+                  <li><a class="dropdown-item" href="{% url "publication:healthPublication" %}">Health</a></li>
+                  <li><a class="dropdown-item" href="{% url "publication:otherPublication" %}">Others</a></li>
+                </ul>
+              </li>
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "user:userLogout" %}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "user:userRegister" %}">Register</a>
+                </li>
+                <li lass="nav-item">
+                  <a class="nav-link" href="{% url "user:userLogin" %}">Login</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% if messages %}
+        <div class="container">
+          {% for message in messages %}
+            <div id="success_message" class="alert alert-info">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% block content %}
+        <h1>Home page</h1>
+        <div class="container">
+          {% for publication in publications %}
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{ publication.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ publication.category }}</h6>
+                <p class="card-text">{{ publication.subtitle }}</p>
+                <a href="{% url "publication:detailsPublication" publication.id %}" class="card-link"><button type="button" class="btn btn-primary">See</button></a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endblock content %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+h3 {
+    margin-top: 2em;
+    text-align: center;
+}
+
+form {
+    margin: 0 auto;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}

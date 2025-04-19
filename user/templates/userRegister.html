@@ -1,0 +1,25 @@
+{% extends "home.html" %}
+
+{% block title %}Registrar usuário{% endblock title %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'userRegister.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <section id="register_user_header">
+        <h1>User register</h1>
+    </section>
+    <form action="{% url "user:userRegister" %}" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    {{ form.as_table }}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+{% endblock content %}

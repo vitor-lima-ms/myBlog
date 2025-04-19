@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+
+{% block title %}Search{% endblock title %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'categoryPublication.css' %}">
+{% endblock css %}
+
+{% block content %}
+<h1>Search</h1>
+<div class="container">
+    {% for publication in publications %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ publication.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ publication.category }}</h6>
+                <p class="card-text">{{ publication.subtitle }}</p>
+                <a href="{% url "publication:detailsPublication" publication.id %}" class="card-link"><button type="button" class="btn btn-primary">See</button></a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

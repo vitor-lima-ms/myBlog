@@ -1,0 +1,59 @@
+{% extends "home.html" %}
+
+{% block title %}Publication details{% endblock title %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'detailsPublication.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <h1>Publication details</h1>
+    <div class="container">
+        <table class="table table-striped table-hover table-bordered table-sm">
+            <tbody>
+                <tr>
+                    <th scope="row">Title</th>
+                    <td>{{ publication.title }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Subtitle</th>
+                    <td>{{ publication.subtitle }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Category</th>
+                    <td>{{ publication.category }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Created At</th>
+                    <td>{{ publication.createdAt }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Author</th>
+                    <td>{{ publication.author }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Content</th>
+                    <td>{{ publication.content }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="{% url 'publication:home' %}" class="btn btn-secondary">Back to home</a><br><br>
+        <form action="{% url 'publication:createComment' publication.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <h3>Comments</h3>
+        {% if comments %}
+            <table class="table table-striped table-hover table-bordered table-sm">
+                {% for comment in comments %}
+                    <tr>
+                        <td><strong>{{ comment.author }}:</strong> {{ comment.content }}</td>
+                        <td>{{ comment.createdAt }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>    
+{% endblock content %}
